@@ -1,1 +1,1 @@
-
+print("czołem")
