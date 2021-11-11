@@ -1,2 +1,3 @@
 program
 pyinstaler
+https://rk.edu.pl/pl/pyqt/
