@@ -9,6 +9,13 @@
 #C.pack()
 #C.mainloop()
 #nazwa programu
+
+
+#import biblioteki do wysyłania maili
+from email import message
+import smtplib
+
+#nazwa programu
 print("program do rozdawania zadań")
 print(end="\n"*4)
 
@@ -24,7 +31,7 @@ opcje_menu={
     0:'wyjście\n',
     }
 
-#tworzymy słownik
+#tworzymy liste
 
 lista_zadan = [];
 
@@ -34,6 +41,7 @@ def pokaz_zadania():
     for x in lista_zadan:
         print(str(numer_zadania)+" "+x)
         numer_zadania+=1
+
 def print_menu():
     for key in opcje_menu.keys():
         print (key, '--', opcje_menu[key] )
@@ -42,7 +50,7 @@ def print_menu():
 def opcja1():
     print("wybrales opcje dodaj zadanie.")
     print("przykład: DD.MM.YYYY HH:MM: nowe_zadanie")
-    nowe_zadanie = input("podaj date nowego zadania oraz nazwę./n")
+    nowe_zadanie = input("podaj date nowego zadania oraz nazwę:    ")
     print("\n")
     lista_zadan.append(nowe_zadanie)
     
@@ -56,16 +64,52 @@ def opcja2():
 def opcja3():
     print("wybrałes opcje usuń zadanie.")
     pokaz_zadania()
-    usun_zadanie = int(input("wybierz numer zadania które chcesz usunąć bo już je wykonałes. : "))
-    lista_zadan.pop(usun_zadanie)
+    try:
+        usun_zadanie = int(input("wybierz numer zadania które chcesz usunąć bo już je wykonałes. : "))
+        lista_zadan.pop(usun_zadanie)
+    except:
+        print("wybierz poprawną opcje")
 
 #kod menu 4 zapisz do pliku
 def opcja4():
-    print("opcja4")
+    print("zapisz do pliku")
+    plik = open("zadania.txt", "w")
+    for nowe_zadanie in lista_zadan:
+        plik.write(nowe_zadanie+"\n")
+    plik.close()
+
+#otwieranie z zapisanego pliku
+def otworz_plik():
+    plik =open("zadania.txt")
+    for line in plik.readlines():
+        lista_zadan.append(line.strip())
+    plik.close()
+otworz_plik()
 
 #kod menu 5 wyslij maila
 def opcja5():
-    print("opcja5")
+    print("wysyłanie maila")
+    from email.mime.text import MIMEText
+    from email.header import Header
+
+    sender = "testpocztysmtp2@op.pl"
+    password = "zaq1@WSX"
+    receivers = 'samob90413@zherben.com'
+
+    message = MIMEText('wiadomosc testowa', 'plain', 'utf-8')
+    message['From'] = Header('test ten', 'utf-8')
+    message['To'] = Header('test', 'utf-8')
+
+    subject = 'Python SMTP test poczty'
+    message['Subject'] = Header(subject, 'utf-8')
+
+    try:
+        smtpObj = smtplib.SMTP_SSL("smtp.poczta.onet.pl", 465) 
+        smtpObj.login(sender, password)
+        smtpObj.sendmail(sender, receivers, message.as_string())
+        print("poczta wysłana pomyślnie")
+    except smtplib.SMTPException as e:
+        print("Error"+str(e))
 
 
 
@@ -90,4 +134,6 @@ while(True):
     elif opcja == 0:
         print("koniec programu.")
         exit()
+
+
 
