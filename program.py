@@ -13,6 +13,7 @@
 
 #import biblioteki do wysyłania maili
 from email import message
+from email.mime.nonmultipart import MIMENonMultipart
 import smtplib
 
 #nazwa programu
@@ -91,20 +92,31 @@ def opcja5():
     print("wysyłanie maila")
     from email.mime.text import MIMEText
     from email.header import Header
+    from email.mime.multipart import MIMEMultipart
 
-    sender = "testpocztysmtp2@op.pl"
+    odbiorca =input("podaj nazwę maila: ")
+    
+    
+    sender = "testowye@poczta.fm"
     password = "zaq1@WSX"
-    receivers = 'samob90413@zherben.com'
-
-    message = MIMEText('wiadomosc testowa', 'plain', 'utf-8')
-    message['From'] = Header('test ten', 'utf-8')
-    message['To'] = Header('test', 'utf-8')
-
-    subject = 'Python SMTP test poczty'
+    receivers = odbiorca
+    
+    subject = input("Temat: ")
+    
+    message= MIMEMultipart()
+    message.attach( MIMEText(input("wiadomosc: "), 'plain', 'utf-8'))
+    message['From'] = Header('testowye')
+    message['To'] = Header(receivers, 'utf-8')
     message['Subject'] = Header(subject, 'utf-8')
 
+    zalacznik = MIMEText(open('zadania.txt', 'rb').read(), 'base64', 'utf-8')
+    zalacznik["Content-Type"] = 'application/octet-stream'
+    zalacznik["Content-Dispsition"] = 'attachment; filename="zadania.txt" '
+    message.attach(zalacznik)
+    
+
     try:
-        smtpObj = smtplib.SMTP_SSL("smtp.poczta.onet.pl", 465) 
+        smtpObj = smtplib.SMTP_SSL("poczta.interia.pl", 465) 
         smtpObj.login(sender, password)
         smtpObj.sendmail(sender, receivers, message.as_string())
         print("poczta wysłana pomyślnie")
@@ -134,6 +146,8 @@ while(True):
     elif opcja == 0:
         print("koniec programu.")
         exit()
+
+
 
 
 
