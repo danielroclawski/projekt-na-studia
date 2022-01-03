@@ -129,37 +129,40 @@ def opcja5():
 import getpass
 
 #panel logowania
-user="user1"
-haslo="1234"
-password=haslo.getpass()
-while input("nazwa uzytkownika: ") == user and password  :
+def logowanie():
+    user="user1"
+    haslo="1234"
+    if input("nazwa uzytkownika: ") == user and input("haslo: ") == haslo  :
    
-#pętla wybierająca wybór użytkownika
-    while(True):
-        print("    lista dostępnych zadań")
-        print("------------------------------\n")
+    #pętla wybierająca wybór użytkownika
+        while(True):
+            print("    lista dostępnych zadań")
+            print("------------------------------\n")
         
-        print_menu()
-        opcja=' '
-        try:
-            opcja=int(input('wybierz co chcesz zrobić: '))
-        except:
-            print("wybierz poprawną opcje")
-        if opcja == 1:
-            opcja1()
-        elif opcja == 2:
-            opcja2()
-        elif opcja == 3:
-            opcja3()
-        elif opcja == 4:
-            opcja4()
-        elif opcja == 5:
-            opcja5()
-        elif opcja == 0:
-            print("koniec programu.")
-            exit()
-#else:
-   # print("uzytkownik lub hasło niepoprawne")
+            print_menu()
+            opcja=' '
+            try:
+                opcja=int(input('wybierz co chcesz zrobić: '))
+            except:
+                print("wybierz poprawną opcje")
+            if opcja == 1:
+                opcja1()
+            elif opcja == 2:
+                opcja2()
+            elif opcja == 3:
+                opcja3()
+            elif opcja == 4:
+                opcja4()
+            elif opcja == 5:
+                opcja5()
+            elif opcja == 0:
+                print("koniec programu.")
+                exit()
+    else:
+        print("uzytkownik lub hasło niepoprawne")
+        logowanie()
+logowanie()
+
 
 
 
