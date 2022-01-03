@@ -15,14 +15,15 @@
 from email import message
 from email.mime.nonmultipart import MIMENonMultipart
 import smtplib
+from sys import _clear_type_cache
 
+import os
 #nazwa programu
 print("program do rozdawania zadań")
 print(end="\n"*4)
 
 #lista dostępnych zadań
-print("    lista dostępnych zadań")
-print("------------------------------\n")
+
 opcje_menu={
     1:'dodaj zadanie.',
     2:'pokaz zadania.',
@@ -125,27 +126,40 @@ def opcja5():
 
 
 
+import getpass
+
+#panel logowania
+user="user1"
+haslo="1234"
+password=haslo.getpass()
+while input("nazwa uzytkownika: ") == user and password  :
+   
 #pętla wybierająca wybór użytkownika
-while(True):
-    print_menu()
-    opcja=' '
-    try:
-        opcja=int(input('wybierz co chcesz zrobić: '))
-    except:
-        print("wybierz poprawną opcje")
-    if opcja == 1:
-        opcja1()
-    elif opcja == 2:
-        opcja2()
-    elif opcja == 3:
-        opcja3()
-    elif opcja == 4:
-        opcja4()
-    elif opcja == 5:
-        opcja5()
-    elif opcja == 0:
-        print("koniec programu.")
-        exit()
+    while(True):
+        print("    lista dostępnych zadań")
+        print("------------------------------\n")
+        
+        print_menu()
+        opcja=' '
+        try:
+            opcja=int(input('wybierz co chcesz zrobić: '))
+        except:
+            print("wybierz poprawną opcje")
+        if opcja == 1:
+            opcja1()
+        elif opcja == 2:
+            opcja2()
+        elif opcja == 3:
+            opcja3()
+        elif opcja == 4:
+            opcja4()
+        elif opcja == 5:
+            opcja5()
+        elif opcja == 0:
+            print("koniec programu.")
+            exit()
+#else:
+   # print("uzytkownik lub hasło niepoprawne")
 
 
 
